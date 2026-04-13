@@ -1,18 +1,18 @@
-type Unit = "g" | "ml" | "unit"
+import { Unit } from "./unit";
 
 export type Ingredient = {
-    id: string,
-    name: string,
+  id: string;
+  name: string;
 
-    unit: Unit,
+  unit: Unit;
 
-    // values per unit
-    calories: number,
-    macros: {
-        carbs: number,
-        protein: number,
-        fat: number
-    },
+  // values per unit
+  calories: number;
+  macros: {
+    carbs: number;
+    protein: number;
+    fat: number;
+  };
 
-    createdAt: string
-}
+  createdAt: string;
+};
