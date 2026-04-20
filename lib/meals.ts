@@ -64,7 +64,7 @@ export const saveMeal = (formData: MealForm) => {
   localStorage.setItem("meals", JSON.stringify(existingMeals));
 };
 
-export const deleteMeal = (id: string) => {
+export const removeMeal = (id: string) => {
   const existingMeals = getMeals();
 
   const newMeals = existingMeals.filter((meal) => meal.id !== id);

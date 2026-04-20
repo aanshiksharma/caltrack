@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { OverlayContext } from "./overlay-context";
-import { Overlay, OverlayType } from "./types";
+import { useState, createContext } from "react";
+import { Overlay, OverlayType, OverlayContextType } from "./types";
 import { overlayMap } from "./overlay-map";
+
+export const OverlayContext = createContext<OverlayContextType | null>(null);
 
 function OverlayProvider({ children }: { children: React.ReactNode }) {
   const [overlay, setOverlay] = useState<Overlay>({ type: null });

@@ -31,7 +31,7 @@ export const saveIngredient = (formData: IngredientForm) => {
   localStorage.setItem("ingredients", JSON.stringify(existingIngredients));
 };
 
-export const deleteIngredient = (id: string) => {
+export const removeIngredient = (id: string) => {
   const existingIngredients = getIngredients();
 
   const newIngredients = existingIngredients.filter(

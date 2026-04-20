@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 
-import OverlayProvider from "@/context/overlay/OverlayProvider";
+import Providers from "@/components/Providers";
 
 const poppins = Poppins({
-  subsets: ['latin'],
-  variable: '--font-poppins',
-  weight: ['400', '500', '600', '700'],
-})
+  subsets: ["latin"],
+  variable: "--font-poppins",
+  weight: ["400", "500", "600", "700"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,17 +17,12 @@ export const metadata: Metadata = {
 
 function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <OverlayProvider>
-      <html
-        lang="en"
-        className={`${poppins.variable} h-full antialiased`}
-      >
-
+    <Providers>
+      <html lang="en" className={`${poppins.variable} h-full antialiased`}>
         <body className="min-h-full flex flex-col">{children}</body>
       </html>
-    </OverlayProvider>
+    </Providers>
   );
 }
-
 
 export default RootLayout;

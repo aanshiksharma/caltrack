@@ -1,8 +1,8 @@
 import { useFieldArray, useForm } from "react-hook-form";
 import { MealForm } from "@/types/forms/meal-form";
-import { getIngredients } from "@/lib/ingredients";
-import { saveMeal } from "@/lib/meals";
 import useOverlay from "@/hooks/useOverlay";
+import useIngredients from "@/hooks/useIngredients";
+import useMeals from "@/hooks/useMeals";
 
 const defaultFormData: MealForm = {
   name: "",
@@ -16,7 +16,8 @@ const defaultFormData: MealForm = {
 
 function FormMeal() {
   const { closeOverlay } = useOverlay();
-  const existingIngredients = getIngredients();
+  const { ingredients } = useIngredients();
+  const { meals, addMeal } = useMeals();
 
   const { register, control, handleSubmit, reset } = useForm<MealForm>({
     defaultValues: defaultFormData,
@@ -28,8 +29,7 @@ function FormMeal() {
   });
 
   const onSubmit = (data: MealForm) => {
-    console.log(data);
-    saveMeal(data);
+    addMeal(data);
     reset();
     closeOverlay();
   };
@@ -56,13 +56,10 @@ function FormMeal() {
                 className="input"
               >
                 <option value={"select-ingredient"}>Choose Ingredient</option>
-                {existingIngredients.length > 0 ? (
-                  existingIngredients.map((existingIngredient) => (
-                    <option
-                      key={existingIngredient.id}
-                      value={existingIngredient.id}
-                    >
-                      {existingIngredient.name}
+                {ingredients.length > 0 ? (
+                  ingredients.map((ingredient) => (
+                    <option key={ingredient.id} value={ingredient.id}>
+                      {ingredient.name}
                     </option>
                   ))
                 ) : (

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IngredientForm } from "@/types/forms/ingredient-form";
-import { saveIngredient } from "@/lib/ingredients";
+import useIngredients from "@/hooks/useIngredients";
 import useOverlay from "@/hooks/useOverlay";
 
 const defaultFormData: IngredientForm = {
@@ -14,6 +14,7 @@ const defaultFormData: IngredientForm = {
 
 function FormIngredient() {
   const { closeOverlay } = useOverlay();
+  const { addIngredient } = useIngredients();
   const [formData, setFormData] = useState<IngredientForm>(defaultFormData);
 
   const handleChange = (
@@ -34,7 +35,7 @@ function FormIngredient() {
 
   const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
-    saveIngredient(formData);
+    addIngredient(formData);
     resetForm();
     closeOverlay();
   };

@@ -2,14 +2,15 @@
 
 import { useState } from "react";
 import useOverlay from "@/hooks/useOverlay";
-import { getIngredients, deleteIngredient } from "@/lib/ingredients";
-import { getMeals, deleteMeal } from "@/lib/meals";
+
+import useIngredients from "@/hooks/useIngredients";
+import useMeals from "@/hooks/useMeals";
 
 function Dashboard() {
   const [showMode, setShowMode] = useState<"INGREDIENTS" | "MEALS">("MEALS");
-  const ingredients = getIngredients();
-  const meals = getMeals(); // TODO: implement meals
 
+  const { ingredients, deleteIngredient } = useIngredients();
+  const { meals, deleteMeal } = useMeals();
   const { openOverlay } = useOverlay();
 
   return (
@@ -76,6 +77,52 @@ function Dashboard() {
               ))
             ) : (
               <p>No Ingredients Found</p>
+            )}
+          </div>
+        )}
+
+        {showMode === "MEALS" && (
+          <div className="w-full">
+            {meals.length > 0 ? (
+              meals.map((meal) => (
+                <div key={meal.id} className="p-4 bg-neutral-900 rounded mb-2">
+                  <h2 className="text-lg font-bold">{meal.name}</h2>
+                  <p>
+                    Calories in this meal :{" "}
+                    {meal.ingredients.reduce((total, ingredient) => {
+                      return total + ingredient.snapshot.calories;
+                    }, 0)}
+                    kCal
+                  </p>
+                  <p>
+                    Carbs:{" "}
+                    {meal.ingredients.reduce((total, ingredient) => {
+                      return total + ingredient.snapshot.macros.carbs;
+                    }, 0)}
+                    g
+                  </p>
+                  <p>
+                    Protein:{" "}
+                    {meal.ingredients.reduce((total, ingredient) => {
+                      return total + ingredient.snapshot.macros.protein;
+                    }, 0)}
+                    g
+                  </p>
+                  <p>
+                    Fat:{" "}
+                    {meal.ingredients.reduce((total, ingredient) => {
+                      return total + ingredient.snapshot.macros.fat;
+                    }, 0)}
+                    g
+                  </p>
+
+                  <button onClick={() => deleteMeal(meal.id)}>
+                    Delete Meal
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p>No Meals Found</p>
             )}
           </div>
         )}
