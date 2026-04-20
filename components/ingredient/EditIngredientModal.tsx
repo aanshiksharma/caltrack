@@ -1,7 +1,7 @@
 import useOverlay from "@/hooks/useOverlay";
-import Modal from "./Modal";
+import Modal from "../ui/Modal";
 
-function AddMealModal() {
+function EditIngredientModal() {
   const { closeOverlay } = useOverlay();
 
   return (
@@ -12,4 +12,4 @@ function AddMealModal() {
   );
 }
 
-export default AddMealModal;
+export default EditIngredientModal;

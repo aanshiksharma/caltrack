@@ -1,13 +1,10 @@
-import { Unit } from "../unit";
+export type MealFormIngredient = {
+  ingredientId: string;
+  quantity: number;
+};
 
 export type MealForm = {
   name: string;
 
-  ingredients: {
-    name: string;
-    quantity: {
-      value: number;
-      unit: Unit;
-    };
-  }[];
+  ingredients: MealFormIngredient[];
 };

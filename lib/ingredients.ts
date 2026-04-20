@@ -30,3 +30,13 @@ export const saveIngredient = (formData: IngredientForm) => {
   existingIngredients.push(newIngredient);
   localStorage.setItem("ingredients", JSON.stringify(existingIngredients));
 };
+
+export const deleteIngredient = (id: string) => {
+  const existingIngredients = getIngredients();
+
+  const newIngredients = existingIngredients.filter(
+    (ingredient) => ingredient.id !== id,
+  );
+
+  localStorage.setItem("ingredients", JSON.stringify(newIngredients));
+};
