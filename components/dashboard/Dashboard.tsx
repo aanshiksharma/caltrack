@@ -5,12 +5,20 @@ import useOverlay from "@/hooks/useOverlay";
 
 import useIngredients from "@/hooks/useIngredients";
 import useMeals from "@/hooks/useMeals";
+import IngredientCard, {
+  IngredientCardLoading,
+} from "../ingredient/IngredientCard";
+import MealCard, { MealCardLoading } from "../meal/MealCard";
 
 function Dashboard() {
   const [showMode, setShowMode] = useState<"INGREDIENTS" | "MEALS">("MEALS");
 
-  const { ingredients, deleteIngredient } = useIngredients();
-  const { meals, deleteMeal } = useMeals();
+  const {
+    ingredients,
+    loading: ingredientsLoading,
+    deleteIngredient,
+  } = useIngredients();
+  const { meals, loading: mealsLoading, deleteMeal } = useMeals();
   const { openOverlay } = useOverlay();
 
   return (
@@ -52,80 +60,39 @@ function Dashboard() {
           </button>
         </div>
 
-        {showMode === "INGREDIENTS" && (
-          <div className="w-full">
-            {ingredients.length > 0 ? (
-              ingredients.map((ingredient) => (
-                <div
-                  key={ingredient.id}
-                  className="p-4 bg-neutral-900 rounded mb-2"
-                >
-                  <h2 className="text-lg font-bold">{ingredient.name}</h2>
-                  <p>
-                    Calories per{" "}
-                    <span className="lowercase">{ingredient.unit}</span>:{" "}
-                    {ingredient.calories}
-                  </p>
-                  <p>Carbs: {ingredient.macros.carbs}g</p>
-                  <p>Protein: {ingredient.macros.protein}g</p>
-                  <p>Fat: {ingredient.macros.fat}g</p>
+        {showMode === "INGREDIENTS" &&
+          (ingredientsLoading ? (
+            <IngredientCardLoading />
+          ) : (
+            <div className="w-full">
+              {ingredients.length > 0 ? (
+                ingredients.map((ingredient) => (
+                  <IngredientCard
+                    key={ingredient.id}
+                    ingredient={ingredient}
+                    deleteIngredient={deleteIngredient}
+                  />
+                ))
+              ) : (
+                <p>No Ingredients Found</p>
+              )}
+            </div>
+          ))}
 
-                  <button onClick={() => deleteIngredient(ingredient.id)}>
-                    Delete Ingredient
-                  </button>
-                </div>
-              ))
-            ) : (
-              <p>No Ingredients Found</p>
-            )}
-          </div>
-        )}
-
-        {showMode === "MEALS" && (
-          <div className="w-full">
-            {meals.length > 0 ? (
-              meals.map((meal) => (
-                <div key={meal.id} className="p-4 bg-neutral-900 rounded mb-2">
-                  <h2 className="text-lg font-bold">{meal.name}</h2>
-                  <p>
-                    Calories in this meal :{" "}
-                    {meal.ingredients.reduce((total, ingredient) => {
-                      return total + ingredient.snapshot.calories;
-                    }, 0)}
-                    kCal
-                  </p>
-                  <p>
-                    Carbs:{" "}
-                    {meal.ingredients.reduce((total, ingredient) => {
-                      return total + ingredient.snapshot.macros.carbs;
-                    }, 0)}
-                    g
-                  </p>
-                  <p>
-                    Protein:{" "}
-                    {meal.ingredients.reduce((total, ingredient) => {
-                      return total + ingredient.snapshot.macros.protein;
-                    }, 0)}
-                    g
-                  </p>
-                  <p>
-                    Fat:{" "}
-                    {meal.ingredients.reduce((total, ingredient) => {
-                      return total + ingredient.snapshot.macros.fat;
-                    }, 0)}
-                    g
-                  </p>
-
-                  <button onClick={() => deleteMeal(meal.id)}>
-                    Delete Meal
-                  </button>
-                </div>
-              ))
-            ) : (
-              <p>No Meals Found</p>
-            )}
-          </div>
-        )}
+        {showMode === "MEALS" &&
+          (mealsLoading ? (
+            <MealCardLoading />
+          ) : (
+            <div className="w-full">
+              {meals.length > 0 ? (
+                meals.map((meal) => (
+                  <MealCard key={meal.id} meal={meal} deleteMeal={deleteMeal} />
+                ))
+              ) : (
+                <p>No Meals Found</p>
+              )}
+            </div>
+          ))}
       </main>
     </div>
   );

@@ -1,8 +1,8 @@
-import AddMealModal from "@/components/meal/AddMealModal";
-import EditMealModal from "@/components/meal/EditMealModal";
+import AddMealModal from "@/components/meal/modals/AddMealModal";
+import EditMealModal from "@/components/meal/modals/EditMealModal";
 
-import AddIngredientModal from "@/components/ingredient/AddIngredientModal";
-import EditIngredientModal from "@/components/ingredient/EditIngredientModal";
+import AddIngredientModal from "@/components/ingredient/modals/AddIngredientModal";
+import EditIngredientModal from "@/components/ingredient/modals/EditIngredientModal";
 
 export const overlayMap = {
   ADD_MEAL: AddMealModal,

@@ -1,5 +1,5 @@
 import useOverlay from "@/hooks/useOverlay";
-import Modal from "../ui/Modal";
+import Modal from "../../ui/Modal";
 
 function EditIngredientModal() {
   const { closeOverlay } = useOverlay();

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { IngredientForm } from "@/types/forms/ingredient-form";
 import useIngredients from "@/hooks/useIngredients";

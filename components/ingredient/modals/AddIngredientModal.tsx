@@ -1,10 +1,5 @@
-"use client";
-
-import { useState } from "react";
-import { IngredientForm } from "@/types/forms/ingredient-form";
-import { saveIngredient } from "@/lib/ingredients";
 import useOverlay from "@/hooks/useOverlay";
-import Modal from "../ui/Modal";
+import Modal from "../../ui/Modal";
 import FormIngredient from "./FormIngredient";
 
 function AddIngredientModal() {
